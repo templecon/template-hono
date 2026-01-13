@@ -5,12 +5,16 @@ import { describeRoute, resolver, validator } from "hono-openapi";
 const inputSchema = z.object({
     // This description is optional, but useful for OpenAPI
     // Write it if possible
-    name: z.string().min(1).max(100).describe(" Name to be greeted"),
+    name: z
+        .string()
+        .min(1)
+        .max(100)
+        .meta({ description: "Name to be greeted" }),
 });
 const outputSchema = z.object({
     hello: z.string(),
 });
-let route = new Hono().post(
+const route = new Hono().post(
     "/",
     describeRoute({
         responses: {

@@ -56,7 +56,8 @@ To keep our code super neat and sparkly, please follow these rules:
 
 - **JavaScript:**
     - Avoid. Use TypeScript instead!
-    - If you must, follow the same rules as TypeScript.
+    - If you must(e.g. config files which do not support TypeScript), follow the same rules as TypeScript.
+    - Use `// @ts-check` at the top of the file for type checking.
     - Use JSDoc comments, especially for functions.
     - Do not use common types like `Object`, `Any`. Use specific types.
 
@@ -69,8 +70,19 @@ To keep our code super neat and sparkly, please follow these rules:
     - MAKE a schema for each endpoint. Check out the route.ts file for examples. It is needed for generating OpenAPI docs.
     - Use middleware for common tasks like authentication, logging, etc.
     - Keep route handlers focused on a single task. We got the serverless power!
+    - Make all routes chained. This is necessary for testing autocompletion and validation.
+
 - **Commit Messages:**
     - Use Conventional Commits style. Check out [conventionalcommits.org](https://www.conventionalcommits.org/en/v1.0.0/) for details.
+
+- **Testing:**
+    - Write tests for new features and bug fixes.
+    - Use descriptive names for test cases.
+    - Keep tests isolated and independent.
+    - Use `it.concurrent` for tests that can run in parallel.
+    - Aim for 90%+ code coverage, but don't obsess over it.
+    - Focus on testing critical paths and edge cases. Don't test other library's code or trivial code.
+    - Use `expectTypeOf<T>()` for type testing.
 
 - **Review:**
     - PRs should be reviewed by at least one friend(AI friend is friend too) before merging!

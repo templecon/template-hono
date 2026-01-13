@@ -31,7 +31,7 @@ const app = new Hono<{ Bindings: Bindings }>()
     )
     .route("/hello", helloRoute);
 // Not chained, so it will not be appear on test route list
-//Also already tested by hono-openapi
+// Also already tested by hono-openapi
 /* istanbul ignore next -- @preserve */
 app.get(
     "/openapi.json",
