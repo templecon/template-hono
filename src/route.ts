@@ -2,8 +2,6 @@ import { z } from "@hono/zod-openapi";
 import { Hono } from "hono";
 import { describeRoute, resolver, validator } from "hono-openapi";
 
-let route = new Hono();
-
 const inputSchema = z.object({
     // This description is optional, but useful for OpenAPI
     // Write it if possible
@@ -12,8 +10,7 @@ const inputSchema = z.object({
 const outputSchema = z.object({
     hello: z.string(),
 });
-
-route = route.post(
+let route = new Hono().post(
     "/",
     describeRoute({
         responses: {

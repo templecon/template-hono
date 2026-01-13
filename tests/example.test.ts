@@ -1,13 +1,13 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 
-describe("failed", () => {
-    it("this test fails", () => {
-        expect(1 + 1).toBe(3);
+describe("math sanity", () => {
+    it("adds numbers", () => {
+        expect(1 + 1).toBe(2);
     });
 });
-describe.skip("example", () => {
-    it.concurrent("says hello world", () => {
-        expect("hello world").toBe("hello world");
+
+describe("types", () => {
+    it("string literal is string", () => {
         expectTypeOf<"hello world">().toBeString();
     });
 });

@@ -1,7 +1,14 @@
 name: Lint
 
 on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
+  
 
 jobs:
   lint:
@@ -28,12 +35,14 @@ jobs:
 
       - name: Run lint
         run: pnpm lint
+
       - name: Run test & coverage
         run: pnpm test:coverage --coverage.reporter=json-summary
         timeout-minutes: 10
       
       - name: Update Coverage Status
-        if: always()
+        # Run only for PRs
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         continue-on-error: true
         with:
