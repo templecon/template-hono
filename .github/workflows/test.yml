@@ -1,0 +1,64 @@
+name: Tests
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+permissions:
+    contents: read
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                shardIndex: [1, 2] # [1,2,3,4,5...]
+                shardTotal: [2] # [len(shardIndex)]
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup pnpm Environment
+              uses: concertypin/action/pnpm-install@master
+
+            - name: Run tests
+              run: pnpm run test --reporter=blob --coverage.enabled --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+
+            - name: Upload blob report to GitHub Actions Artifacts
+              if: ${{ !cancelled() }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: blob-report-${{ matrix.shardIndex }}
+                  path: .vitest-reports/*
+                  include-hidden-files: true
+                  retention-days: 1
+
+    merge-reports:
+        if: ${{ !cancelled() }}
+        needs: [tests]
+        permissions:
+            pull-requests: write
+            statuses: write
+            contents: read
+
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup pnpm Environment
+              uses: concertypin/action/pnpm-install@master
+
+            - name: Download blob reports from GitHub Actions Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: .vitest-reports
+                  pattern: blob-report-*
+                  merge-multiple: true
+
+            - name: Merge reports
+              run: pnpm run test --merge-reports --reporter=github-actions --reporter=default --coverage.reporter=text --coverage.reporter=json-summary
+
+            - name: Update Coverage Status
+              if: ${{ github.event_name == 'pull_request' && always()}}
+              uses: concertypin/action/report-vitest-coverage@master
+              with:
+                  threshold: 50

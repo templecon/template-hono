@@ -1,43 +1,44 @@
 /// <reference types="vitest/config" />
-import { cloudflare } from "@cloudflare/vite-plugin";
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
-import { defineConfig, type UserConfig } from "vite";
 
-const ENVIRONMENT: "edge-runtime" | "cloudflare-workers" = "edge-runtime";
+import { type UserConfig, defineConfig } from "vite";
+import { fileURLToPath } from "node:url";
+import dts from "vite-plugin-dts";
 
-export default (ENVIRONMENT === "edge-runtime"
-    ? defineConfig
-    : defineWorkersConfig)(() => {
-    return {
-        test: {
-            poolOptions: {
-                workers: { wrangler: { configPath: "./wrangler.jsonc" } },
-            },
-            coverage: {
-                provider: "istanbul",
-                exclude: ["tests/**", "*.config.ts"],
-                include: ["src/**"],
-                reporter: ["text-summary", "html", "json"],
-                reportOnFailure: true,
-            },
-            environment:
-                ENVIRONMENT === "edge-runtime" ? "edge-runtime" : "node",
-            typecheck: {
-                tsconfig: "./tsconfig.json",
-            },
-            include: ["tests/**/*.test.ts"],
+type Config = Required<UserConfig>;
+
+const resolve: Config["resolve"] = {
+    alias: {
+        "@": fileURLToPath(new URL("src", import.meta.url)),
+    },
+};
+
+const testConfig: Config["test"] = {
+    coverage: { 
+        enabled: true,
+        include: ["src/**/*.ts"],
+        provider: "v8",
+        reportOnFailure: true,
+        reporter: ["text", "json-summary", "html"],
+    },
+    environment: "node",
+    exclude: ["**/node_modules/**", "**/dist/**"],
+    globals: true,
+    include: ["tests/**/*.test.ts"],
+    setupFiles: "./tests/setup.ts",
+};
+
+export default defineConfig({
+    build: {
+        lib: {
+            entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
+            formats: ["es"],
+            fileName: "index",
         },
-        plugins: [cloudflare()],
-        server: {
-            cors: false, // https://hono.dev/docs/middleware/builtin/cors#using-with-vite
-        },
-        build: {
-            lib: {
-                entry: "src/index.ts",
-                formats: ["es"],
-            },
-            sourcemap: true,
-        },
-        clearScreen: false,
-    } satisfies UserConfig;
+        outDir: "dist",
+        sourcemap: true,
+    },
+    clearScreen: false,
+    plugins: [dts({ rollupTypes: true, tsconfigPath: "./tsconfig.app.json" })],
+    resolve,
+    test: testConfig,
 });
