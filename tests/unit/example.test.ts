@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { example } from "@/index";
-
+import { testClient } from "hono/testing";
+import app from "@/index";
 describe("example test", () => {
-    it("should return example", () => {
-        expect(example()).toBe("example");
+    const client = testClient(app);
+    it("should return example", async () => {
+        const resp = await client.index.$get();
+        expect(await resp.text()).include("Hello");
     });
 });

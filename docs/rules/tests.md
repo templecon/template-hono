@@ -1,6 +1,7 @@
 ## 0. General Guidelines
 
 Tests should follow general TypeScript guidelines. Tests should cover:
+
 - Normal behavior
 - Edge cases
 - Invalid input
@@ -37,6 +38,17 @@ describe("User List", () => {
     });
 });
 ```
+
+## 2. Cloudflare Workers-Specific Tests
+
+> [!WARNING]
+> This is only available if...
+>
+> - `wrangler.jsonc` or `wrangler.toml` is existing
+> - and `@cloudflare/vitest-pool-workers` dependency is installed.
+> - There's additional integration, such as Workers KV, Durable Objects, or R2,
+> - and gonna test those features.
+>   Otherwise, use Unit Tests or Hono's built-in testing utilities.
 
 ## Documentation
 

@@ -1,8 +1,8 @@
 /// <reference types="vitest/config" />
-
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflare } from "@cloudflare/vite-plugin";
 import { type UserConfig, defineConfig } from "vite";
 import { fileURLToPath } from "node:url";
-import dts from "vite-plugin-dts";
 
 type Config = Required<UserConfig>;
 
@@ -10,11 +10,12 @@ const resolve: Config["resolve"] = {
     alias: {
         "@": fileURLToPath(new URL("src", import.meta.url)),
     },
+    external: [],
 };
 
 const testConfig: Config["test"] = {
-    coverage: { 
-        enabled: true,
+    coverage: {
+        enabled: false,
         include: ["src/**/*.ts"],
         provider: "v8",
         reportOnFailure: true,
@@ -26,19 +27,26 @@ const testConfig: Config["test"] = {
     include: ["tests/**/*.test.ts"],
     setupFiles: "./tests/setup.ts",
 };
-
-export default defineConfig({
-    build: {
-        lib: {
-            entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
-            formats: ["es"],
-            fileName: "index",
+const isVitest = typeof process.env.VITEST !== "undefined";
+export default defineConfig(() => {
+    const cloudflarePlugin = isVitest
+        ? cloudflareTest({
+              wrangler: { configPath: "./wrangler.jsonc" },
+          })
+        : cloudflare();
+    return {
+        plugins: [cloudflarePlugin],
+        build: {
+            lib: {
+                entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
+                formats: ["es"],
+                fileName: "index",
+            },
+            outDir: "dist",
+            sourcemap: true,
         },
-        outDir: "dist",
-        sourcemap: true,
-    },
-    clearScreen: false,
-    plugins: [dts({ rollupTypes: true, tsconfigPath: "./tsconfig.app.json" })],
-    resolve,
-    test: testConfig,
+        clearScreen: false,
+        resolve,
+        test: testConfig,
+    } satisfies UserConfig;
 });

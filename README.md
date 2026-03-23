@@ -1,25 +1,35 @@
-> [!NOTE]
-> This is template repository for library development using TypeScript and Vite. Check out [website template](https://github.com/templecon/template-typescript-vite-web) for web application development.
+# Hono OpenAPI Template
 
-# How to use
+Welcome to super-cool Hono + OpenAPI starter! 🚀✨
 
+## Features
+
+- [Hono](https://hono.dev/) web framework
+- [OpenAPI](https://www.openapis.org/) documentation with [hono-openapi](https://honohub.dev/docs/openapi)
+- [Zod](https://zod.dev/) schema validation
+- [Scalar](https://github.com/scalar/scalar) API docs UI
+- Ready for Cloudflare Workers with Wrangler
+
+## Getting Started
+
+```sh
+# Install dependencies
+pnpm install
+
+# Run the development server
+pnpm dev
+
+# Format code
+pnpm format
+
+# Build the project
+pnpm build
 ```
-git clone https://github.com/templecon/template-typescript-vite
-```
 
-## Requirements
+## API Endpoints
 
-Node.js version 22.18.0 or higher is recommended, since it has basic TypeScript support, which is used on eslint.config.ts.
-Older versions will:
+Check out `/docs`. Generated docs are at `/docs`.
 
-- Older than v22.6.0: Not work, migrate Node version or eslint.config.ts to .js.
-- Between v22.6.0 and v22.18.0: Work, but require `--experimental-transform-types`(since v22.7.0) or `--experimental-strip-types`(since v22.6.0) flag on `NODE_OPTIONS` environment variable.
-- v22.18.0 or higher: Work without flags.
+## License
 
-## Conventions and Rules
-
-This project follows specific conventions and rules for code style, data validation, testing, and more. Please refer to the following documentation for detailed guidelines.
-
-- [Typescript](./docs/rules/typescript.md)
-- [Typescript Schema Validation](./docs/rules/typescript_schema.md)
-- [Testing Guidelines](./docs/rules/tests.md)
+Apache-2.0, see [LICENSE](./LICENSE) for details.
