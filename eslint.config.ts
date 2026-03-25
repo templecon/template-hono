@@ -1,9 +1,19 @@
+// ESLint configuration for this project.
 // @ts-check
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import oxlint from "eslint-plugin-oxlint";
 import { defineConfig } from "eslint/config";
 
+/**
+ * ESLint usage level:
+ * - `"off"`: ESLint is disabled (only oxlint runs). Recommended for most development.
+ * - `"no-type-check"`: Use ESLint for non-type-aware rules (faster).
+ * - `"all"`: Enable all ESLint rules including type-aware (slower, use sparingly).
+ *
+ * For most development, oxlint is sufficient. Enable ESLint only when you need
+ * rules that oxlint doesn't support.
+ */
 const useEslint: EslintLevel = "off";
 
 type EslintLevel = "off" | "no-type-check" | "all";

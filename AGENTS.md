@@ -5,15 +5,18 @@ All agents, such as Claude Code, should keep `**/AGENTS.md` in mind.
 
 ## Project Type
 
-This is a **vanilla TypeScript library template** built with Vite. It is designed to be bundled into ESM format for distribution as a package.
+This is a **Hono backend server template** for Cloudflare Workers. It provides a minimal setup for building API servers with Hono, including:
+
+- Zod validation
+- Vitest with Cloudflare worker pool for testing
 
 ## Development Commands
 
 ```bash
-# Start development build in watch mode
+# Start development server (wrangler)
 pnpm dev
 
-# Build for production (outputs ESM to dist/)
+# Build for production (Cloudflare Workers)
 pnpm build
 
 # Format code
@@ -22,16 +25,9 @@ pnpm format
 # Lint code
 pnpm lint
 
-# Run unit tests (Vitest in Node environment)
+# Run tests
 pnpm test
 ```
-
-## Architecture
-
-- **Entry point**: `src/index.ts` - The main entry point that exports the library's API.
-- **ES modules** throughout (`"type": "module"` in package.json)
-- **Output format**: Generates `.js` (ESM) files in the `dist/` directory.
-- **Type definitions**: Automatically generates `.d.ts` files using `vite-plugin-dts`.
 
 ## Coding Standards
 
@@ -39,10 +35,13 @@ See `docs/rules/` for TypeScript, testing, and tooling guidelines.
 
 ## TypeScript Configuration
 
-- **Path alias**: `@/*` maps to `src/*` (configured in `tsconfig.base.json`)
-- **Project references**: Uses `tsconfig.json` with `app` and `node` references
-- **Strict mode** enabled
+- Path alias: `@/*` maps to `src/*` (configured in `tsconfig.base.json`)
 
 ## Package Manager
 
-This project uses **pnpm**.
+This project uses pnpm.
+
+## Cloudflare Workers
+
+This template uses `wrangler` for Cloudflare Workers development and deployment.
+Configuration is in `wrangler.jsonc`.

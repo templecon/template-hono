@@ -32,17 +32,18 @@ When using new plugins, including ESLint's plugins, you should try oxlint's [ESL
 
 ### ESLint
 
-ESLint is used for rules that are not supported by oxlint.
-It supports:
+ESLint is available but disabled by default. It supports:
 
 - All of the rules of typescript-eslint, including type-aware rules.
 - All of ESLint's plugins.
 - All of HTML-superset code, including non-script block.
 
-But super-slow. ESLint should be used only for:
+To enable ESLint, change the `useEslint` setting in `eslint.config.ts`:
 
-- Rules that are not supported by oxlint but important to be checked.
-- Fast enough to be used on local, about 0.5 second to be fully linted, while oxlint is still recommended.
+- `"no-type-check"`: Use for non-type-aware rules (faster, ~0.5s)
+- `"all"`: Full type-aware linting (slower)
+
+ESLint is super-slow when fully enabled. For most development, oxlint alone is sufficient. Use ESLint only when you need rules that oxlint doesn't support.
 
 ## Formatter Configuration
 

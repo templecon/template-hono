@@ -3,8 +3,16 @@ import { testClient } from "hono/testing";
 import app from "@/index";
 describe("example test", () => {
     const client = testClient(app);
-    it("should return example", async () => {
-        const resp = await client.index.$get();
-        expect(await resp.text()).include("Hello");
+    it.concurrent("should throw on invalid request", async () => {
+        //@ts-expect-error Invalid request, should return an error
+        const resp = await client.index.$post();
+        expect(await resp.text()).not.include("Hello");
+    });
+    it.concurrent("should return a greeting message", async () => {
+        const resp = await client.index.$post({
+            json: { name: "Alice" },
+        });
+        const data = await resp.json();
+        expect(data.hello).include("Alice");
     });
 });

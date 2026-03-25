@@ -15,9 +15,9 @@ const resolve: Config["resolve"] = {
 
 const testConfig: Config["test"] = {
     coverage: {
-        enabled: false,
+        enabled: true,
         include: ["src/**/*.ts"],
-        provider: "v8",
+        provider: "istanbul",
         reportOnFailure: true,
         reporter: ["text", "json-summary", "html"],
     },
