@@ -51,6 +51,9 @@ jobs:
                       pnpm-deps-cache-
                   path: ${{ steps.ready-cache.outputs.STORE_PATH }}
 
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
             - name: Run tests
               run: pnpm run test --reporter=blob --coverage.enabled --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
