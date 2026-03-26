@@ -22,15 +22,11 @@
     ],
     "overrides": [
         {
-            "files": [
-                "**/*.d.ts"
-            ],
+            "files": ["**/*.d.ts"],
             "rules": {
                 "no-unused-vars": "off"
             }
         }
     ],
-    "extends": [
-        "scripts/linter/oxlint-eslint.json"
-    ]
+    "extends": ["scripts/linter/oxlint-eslint.json"]
 }
