@@ -1,43 +1,52 @@
 /// <reference types="vitest/config" />
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import { cloudflare } from "@cloudflare/vite-plugin";
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
-import { defineConfig, type UserConfig } from "vite";
+import { type UserConfig, defineConfig } from "vite";
+import { fileURLToPath } from "node:url";
 
-const ENVIRONMENT: "edge-runtime" | "cloudflare-workers" = "edge-runtime";
+type Config = Required<UserConfig>;
 
-export default (ENVIRONMENT === "edge-runtime"
-    ? defineConfig
-    : defineWorkersConfig)(() => {
+const resolve: Config["resolve"] = {
+    alias: {
+        "@": fileURLToPath(new URL("src", import.meta.url)),
+    },
+    external: [],
+};
+
+const testConfig: Config["test"] = {
+    coverage: {
+        enabled: true,
+        include: ["src/**/*.ts"],
+        provider: "istanbul",
+        reportOnFailure: true,
+        reporter: ["text", "json-summary", "html"],
+    },
+    environment: "node",
+    exclude: ["**/node_modules/**", "**/dist/**"],
+    globals: true,
+    include: ["tests/**/*.test.ts"],
+    setupFiles: "./tests/setup.ts",
+};
+const isVitest = typeof process.env.VITEST !== "undefined";
+export default defineConfig(() => {
+    const cloudflarePlugin = isVitest
+        ? cloudflareTest({
+              wrangler: { configPath: "./wrangler.jsonc" },
+          })
+        : cloudflare();
     return {
-        test: {
-            poolOptions: {
-                workers: { wrangler: { configPath: "./wrangler.jsonc" } },
-            },
-            coverage: {
-                provider: "istanbul",
-                exclude: ["tests/**", "*.config.ts"],
-                include: ["src/**"],
-                reporter: ["text-summary", "html", "json"],
-                reportOnFailure: true,
-            },
-            environment:
-                ENVIRONMENT === "edge-runtime" ? "edge-runtime" : "node",
-            typecheck: {
-                tsconfig: "./tsconfig.json",
-            },
-            include: ["tests/**/*.test.ts"],
-        },
-        plugins: [cloudflare()],
-        server: {
-            cors: false, // https://hono.dev/docs/middleware/builtin/cors#using-with-vite
-        },
+        plugins: [cloudflarePlugin],
         build: {
             lib: {
-                entry: "src/index.ts",
+                entry: fileURLToPath(new URL("src/index.ts", import.meta.url)),
                 formats: ["es"],
+                fileName: "index",
             },
+            outDir: "dist",
             sourcemap: true,
         },
         clearScreen: false,
+        resolve,
+        test: testConfig,
     } satisfies UserConfig;
 });

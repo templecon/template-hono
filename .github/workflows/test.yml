@@ -1,0 +1,98 @@
+name: Tests
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+permissions:
+    contents: read
+
+jobs:
+    tests:
+        timeout-minutes: 5
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                shardIndex: [1, 2] # [1,2,3,4,5...]
+                shardTotal: [2] # [len(shardIndex)]
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v5
+              with:
+                  run_install: false
+            - name: Install node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: package.json
+
+            - name: Ready for cache
+              id: ready-cache
+              run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+            - name: Get cache(Leader)
+              # Only leader can save cache, avoiding locking problem from race conditions
+              if: ${{matrix.shardIndex == 1}}
+              uses: actions/cache@v5
+              with:
+                  path: ${{ steps.ready-cache.outputs.STORE_PATH }}
+                  key: pnpm-deps-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+            - name: Get cache(Follower)
+              # Only restore cache for followers
+              if: ${{matrix.shardIndex != 1}}
+              uses: actions/cache/restore@v5
+              with:
+                  key: pnpm-deps-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      pnpm-deps-cache-
+                  path: ${{ steps.ready-cache.outputs.STORE_PATH }}
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Run tests
+              run: pnpm run test --reporter=blob --coverage.enabled --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+
+            - name: Upload blob report to GitHub Actions Artifacts
+              if: ${{ !cancelled() }}
+              uses: actions/upload-artifact@v7
+              with:
+                  name: blob-report-${{ matrix.shardIndex }}
+                  path: .vitest-reports/*
+                  include-hidden-files: true
+                  retention-days: 1
+
+    merge-reports:
+        if: ${{ !cancelled() }}
+        needs: [tests]
+        timeout-minutes: 3
+        permissions:
+            pull-requests: write
+            statuses: write
+            contents: read
+
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup pnpm Environment
+              uses: concertypin/action/pnpm-install@master
+
+            - name: Download blob reports from GitHub Actions Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: .vitest-reports
+                  pattern: blob-report-*
+                  merge-multiple: true
+
+            - name: Merge reports
+              run: pnpm run test --merge-reports --reporter=github-actions --reporter=default --coverage.reporter=text --coverage.reporter=json-summary
+
+            - name: Update Coverage Status
+              if: ${{ github.event_name == 'pull_request' && always()}}
+              uses: concertypin/action/report-vitest-coverage@master
+              with:
+                  threshold: 50

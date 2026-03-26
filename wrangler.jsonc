@@ -2,15 +2,15 @@
     "$schema": "node_modules/wrangler/config-schema.json",
     "upload_source_maps": true,
     "name": "template",
-    "compatibility_date": "2025-08-03",
+    "compatibility_date": "2026-03-17",
     "main": "./src/index.ts",
     "send_metrics": false,
     "observability": {
-        "enabled": true
+        "enabled": true,
     },
     "env": {
         "prod": {
-            "name": ""
-        }
-    }
+            "name": "",
+        },
+    },
 }

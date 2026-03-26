@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.cache/app.tsbuildinfo",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"]
+    },
+    "include": ["src"],
+    "extends": "./tsconfig.base.json"
+}

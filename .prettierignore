@@ -1,0 +1,12 @@
+dist
+.claude
+public
+node_modules
+coverage
+
+
+pnpm-lock.yaml
+**/__screenshots__
+
+worker-configuration.d.ts
+LICENSE
