@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { testClient } from "hono/testing";
-import app from "@/index";
+import { router } from "@/route";
 describe("example test", () => {
-    const client = testClient(app);
+    const client = testClient(router);
     it.concurrent("should throw on invalid request", async () => {
         //@ts-expect-error Invalid request, should return an error
         const resp = await client.index.$post();

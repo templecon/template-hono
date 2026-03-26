@@ -3,14 +3,6 @@ It describes TypeScript rules for the project for readability.
 > [!NOTE]
 > This is not an absolute rule! If you have a good reason to break the rule, feel free to do it with proper justification in code review.
 
-- [TL;DR](#tldr)
-- [Detail](#detail)
-    - [Write Essay for Code](#write-essay-for-code)
-    - [Interface is not interface but interface](#interface-is-not-interface-but-interface)
-    - [Anyone Dislikes `Any` as Much `as any`one](#anyone-dislikes-any-as-much-as-anyone)
-    - [Lazy Dog Than The Quick Brown Fox](#lazy-dog-than-the-quick-brown-fox)
-    - [Brain Can StackOverflow](#brain-can-stackoverflow)
-
 ## TL;DR
 
 - Use `import type` when importing only types. [^1]
@@ -20,7 +12,6 @@ It describes TypeScript rules for the project for readability.
 - [Use `satisfies` instead of `as` for type assertions where possible.](#anyone-dislikes-any-as-much-as-anyone)
 - [Write JSDoc comments for all exported functions and classes!](#write-essay-for-code)
 - [Use named types instead of inline types on destructured parameters.](#brain-can-stackoverflow)
-- [Use `await import()`](#lazy-dog-than-the-quick-brown-fox) to lazy-load large modules.
 
 ## Detail
 
@@ -123,50 +114,6 @@ const data = doSomething() as SomeType;
 
 // Do(Uses `satisfies` to ensure type compatibility without losing type information.)
 const data = doSomething() satisfies SomeType; // Will cause compile error if incompatible. Good!
-```
-
-### Lazy Dog Than The Quick Brown Fox
-
-When dealing with large modules that are not always needed, it's best to lazy-load them using `await import()`. This approach helps to optimize the initial load time of your application by deferring the loading of these modules until they are actually needed.
-
-When to lazy load:
-
-- It seems the module is large
-- and the module is not always needed,
-- or not gonna be used immediately(e.g., don't need on page load, but on function call, button click, etc...)
-
-If you're going to use the module definitely, but not immediately, consider use `import()` without any additional handling on top level. Later `await import()` will be cached.
-
-```ts
-// Don't(It makes large module and this code packed together on bundling time.)
-import { largeModule } from "large-module";
-function useModule(dry: boolean) {
-    if (dry) {
-        console.log("Dry run, not using large module.");
-        return;
-    }
-    largeModule.doSomething();
-}
-// Don't(Better than above, but still makes large module loaded on page load even it might not be used.)
-import("large-module");
-async function useModule(dry: boolean) {
-    const { largeModule } = await import("large-module");
-    if (dry) {
-        console.log("Dry run, not using large module.");
-        return;
-    }
-    largeModule.doSomething();
-}
-
-// Do(Lazy-loads large module only when needed.)
-async function useModule(dry: boolean) {
-    if (dry) {
-        console.log("Dry run, not using large module.");
-        return;
-    }
-    const { largeModule } = await import("large-module");
-    largeModule.doSomething();
-}
 ```
 
 ### Brain Can StackOverflow

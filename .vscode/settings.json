@@ -3,5 +3,8 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.tabSize": 4,
     },
-    "js/ts.preferences.preferTypeOnlyAutoImports": true
+    "js/ts.preferences.preferTypeOnlyAutoImports": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

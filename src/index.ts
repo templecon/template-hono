@@ -1,37 +1,23 @@
+import { router } from "@/route";
+import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
-import {
-    describeRoute,
-    openAPIRouteHandler,
-    resolver,
-    validator,
-} from "hono-openapi";
-import * as z from "zod";
+import { openAPIRouteHandler } from "hono-openapi";
+import { cors } from "hono/cors";
+/**
+ * @fileoverview
+ * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.
+ * Don't make this file too large. If you need to add more routes, create separate route files and import them here.
+ */
 
-const inputSchema = z.object({
-    name: z.string(),
+const corsMiddleware = cors({
+    origin(origin) {
+        if (!import.meta.env.DEV) {
+            throw new Error("CORS is only allowed in development mode.");
+        }
+        return origin;
+    },
 });
-const outputSchema = z.object({
-    hello: z.string().meta({ description: "A greeting message." }),
-});
-const app = new Hono().post(
-    "/",
-    describeRoute({
-        responses: {
-            200: {
-                description: "Successful Response",
-                content: {
-                    "application/json": { schema: resolver(outputSchema) },
-                },
-            },
-        },
-    }),
-
-    validator("json", inputSchema),
-    (c) => {
-        const { name } = c.req.valid("json");
-        return c.json({ hello: `Hello, ${name}!` });
-    }
-);
+const app = new Hono().use("*", corsMiddleware).route("/", router);
 
 // OpenAPI-related
 app.get(
@@ -49,5 +35,14 @@ app.get(
         },
     })
 );
-
+app.get(
+    "/docs",
+    Scalar({
+        defaultHttpClient: {
+            clientKey: "fetch",
+            targetKey: "js",
+        },
+        url: "/openapi.json",
+    })
+);
 export default app;
