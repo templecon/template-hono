@@ -9,7 +9,7 @@ import { cors } from "hono/cors";
  * Don't make this file too large. If you need to add more routes, create separate route files and import them here.
  */
 
-type Env = { SUPER_SECRET?: string };
+export type Env = { SUPER_SECRET?: string };
 
 const corsMiddleware = cors({
     origin(origin) {
