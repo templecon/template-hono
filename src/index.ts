@@ -9,6 +9,8 @@ import { cors } from "hono/cors";
  * Don't make this file too large. If you need to add more routes, create separate route files and import them here.
  */
 
+type Env = { SUPER_SECRET?: string };
+
 const corsMiddleware = cors({
     origin(origin) {
         if (!import.meta.env.DEV) {
@@ -17,7 +19,7 @@ const corsMiddleware = cors({
         return origin;
     },
 });
-const app = new Hono().use("*", corsMiddleware).route("/", router);
+const app = new Hono<{ Bindings: Env }>().use("*", corsMiddleware).route("/", router);
 
 // OpenAPI-related
 app.get(
