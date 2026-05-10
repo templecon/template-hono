@@ -19,7 +19,9 @@ const corsMiddleware = cors({
         return origin;
     },
 });
-const app = new Hono<{ Bindings: Env }>().use("*", corsMiddleware).route("/", router);
+const app = new Hono<{ Bindings: Env }>()
+    .use("*", corsMiddleware)
+    .route("/", router);
 
 // OpenAPI-related
 app.get(
