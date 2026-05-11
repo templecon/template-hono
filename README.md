@@ -1,34 +1,39 @@
-# Hono OpenAPI Template
+# template-hono
 
-Welcome to super-cool Hono + OpenAPI starter! 🚀✨
+A small Hono + Cloudflare Workers template for building APIs with Zod validation, OpenAPI docs, and Vitest.
 
-## Features
+## What You Get
 
 - [Hono](https://hono.dev/) web framework
-- [OpenAPI](https://www.openapis.org/) documentation with [hono-openapi](https://honohub.dev/docs/openapi)
+- [hono-openapi](https://honohub.dev/docs/openapi) for OpenAPI generation
 - [Zod](https://zod.dev/) schema validation
 - [Scalar](https://github.com/scalar/scalar) API docs UI
-- Ready for Cloudflare Workers with Wrangler
+- [oxlint](https://oxc.rs/docs/guide/usage/linter/) for linting
+- [Vitest](https://vitest.dev/) with Cloudflare Workers pool for tests
 
-## Getting Started
+## Using This Template
+
+After copying this template into a new project:
+
+1. Update `package.json` with your project name, repository URL, author, and license.
+2. Review `wrangler.jsonc` and set the Worker name and bindings for the new app.
+3. Rename the app-specific intro in `README.md`.
+4. Check `AGENTS.md` for the local workflow notes before editing.
+5. Run `pnpm install`, `pnpm cf-typegen`, `pnpm lint`, and `pnpm test`.
+
+## Development
 
 ```sh
-# Install dependencies
 pnpm install
-
-# Run the development server
 pnpm dev
-
-# Format code
-pnpm format
-
-# Build the project
+pnpm lint
+pnpm test
 pnpm build
 ```
 
-## API Endpoints
+## API Docs
 
-Check out `/docs`. Generated docs are at `/docs`.
+The generated docs are available at `/docs`.
 
 ## License
 

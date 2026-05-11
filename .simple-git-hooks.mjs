@@ -1,4 +1,4 @@
 //@ts-check
 export default {
-    "pre-commit": "pnpm run pre-commit",
+    "pre-commit": "pnpm run check",
 };

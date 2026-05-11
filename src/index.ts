@@ -2,22 +2,15 @@ import { router } from "@/route";
 import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
-import { cors } from "hono/cors";
+import { cors } from "@/utils/cors";
+import type { HonoEnv } from "@/types";
 /**
  * @fileoverview
  * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.
  * Don't make this file too large. If you need to add more routes, create separate route files and import them here.
  */
 
-const corsMiddleware = cors({
-    origin(origin) {
-        if (!import.meta.env.DEV) {
-            throw new Error("CORS is only allowed in development mode.");
-        }
-        return origin;
-    },
-});
-const app = new Hono().use("*", corsMiddleware).route("/", router);
+const app = new Hono<HonoEnv>().use("*", cors).route("/", router);
 
 // OpenAPI-related
 app.get(
