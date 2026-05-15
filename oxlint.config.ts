@@ -21,6 +21,7 @@ export default defineConfig({
         "**/.cache/**",
         "**/.vscode/**",
         "**/.git/**",
+        "**/.wrangler/**",
     ],
     overrides: [
         {
