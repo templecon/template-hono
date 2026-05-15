@@ -1,10 +1,10 @@
-// Base rule, which is similar to ESLint. Machine-generated, unrecommended to edit manually.
-// Instead, extend this in .oxlintrc.json and override rules.
-{
-    "$schema": "../../node_modules/oxlint/configuration_schema.json",
-    "rules": {
+import { defineConfig } from "oxlint";
+
+export default defineConfig({
+    rules: {
         "@typescript-eslint/await-thenable": "error",
         "@typescript-eslint/ban-ts-comment": "error",
+        "@typescript-eslint/consistent-type-imports": "error",
         "@typescript-eslint/no-array-delete": "error",
         "@typescript-eslint/no-base-to-string": "error",
         "@typescript-eslint/no-duplicate-enum-values": "error",
@@ -102,7 +102,7 @@
         "preserve-caught-error": "error",
         "require-yield": "error",
         "use-isnan": "error",
-        "valid-typeof": "error"
+        "valid-typeof": "error",
     },
-    "categories": {}
-}
+    categories: {},
+});

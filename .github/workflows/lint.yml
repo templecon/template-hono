@@ -1,21 +1,22 @@
 name: Lint
 
 on:
-    pull_request:
+  pull_request:
+  workflow_dispatch:
 permissions:
-    contents: read
+  contents: read
 jobs:
-    lint:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup pnpm Environment
-              uses: concertypin/action/pnpm-install@master
+      - name: Setup pnpm Environment
+        uses: concertypin/action/pnpm-install@master
 
-            - name: Buildable test
-              run: pnpm build
+      - name: Buildable test
+        run: pnpm build
 
-            - name: Run lint
-              run: pnpm lint
+      - name: Run lint
+        run: pnpm lint

@@ -4,7 +4,5 @@
         "editor.tabSize": 4
     },
     "js/ts.preferences.preferTypeOnlyAutoImports": true,
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    "files.eol": "\n"
 }

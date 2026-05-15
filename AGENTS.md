@@ -29,6 +29,15 @@ pnpm lint
 pnpm test
 ```
 
+## Using This Template in a New Project
+
+When you copy or generate a new project from this template:
+
+1. Replace the template identity in `package.json` with your project name, repository URL, author, and license.
+2. Review `wrangler.jsonc` and set the Cloudflare Worker name, compatibility options, and environment bindings for the new project.
+3. Update `README.md` and `AGENTS.md` so the first screen describes the new app instead of the template.
+4. Review `src/utils/cors.ts` and adjust CORS settings if needed. The current setup allows as much as possible.
+
 ## Coding Standards
 
 See `docs/rules/` for TypeScript, testing, and tooling guidelines.

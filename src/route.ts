@@ -1,3 +1,4 @@
+import type { HonoEnv } from "@/types";
 import { Hono } from "hono";
 import { describeRoute, resolver, validator } from "hono-openapi";
 import * as z from "zod";
@@ -9,7 +10,7 @@ const outputSchema = z.object({
     hello: z.string().meta({ description: "A greeting message." }),
 });
 
-export const router = new Hono().post(
+export const router = new Hono<HonoEnv>().post(
     "/",
     describeRoute({
         responses: {
