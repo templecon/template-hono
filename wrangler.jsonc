@@ -8,9 +8,7 @@
     "observability": {
         "enabled": true,
     },
-    "env": {
-        "prod": {
-            "name": "",
-        },
+    "secrets": {
+        "required": ["SUPER_SECRET"],
     },
 }

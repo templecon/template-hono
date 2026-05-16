@@ -5,17 +5,17 @@ It describes TypeScript rules for the project for readability.
 
 ## TL;DR
 
-- Use `import type` when importing only types. [^1]
-- Let oxlint enforce this with `@typescript-eslint/consistent-type-imports`.
-- Use absolute path imports starting from `src/` folder. [^1] "../../../some.ts" is hard to read.
-- [Use `type` instead of `interface` where possible. `type` means type, `interface` means sometimes interface and sometimes type.](#interface-is-not-interface-but-interface)
-- [Avoid using `any` type.](#anyone-dislikes-any-as-much-as-anyone)
-- [Use `satisfies` instead of `as` for type assertions where possible.](#anyone-dislikes-any-as-much-as-anyone)
-- Let oxlint flag unnecessary type assertions with `@typescript-eslint/no-unnecessary-type-assertion`.
-- [Write JSDoc comments for all exported functions and classes!](#write-essay-for-code)
-- [Use named types instead of inline types on destructured parameters.](#brain-can-stackoverflow)
-- Use Hono method chaining for route definitions so route typing stays useful in tests.
-- Do not chain routes only when the route is not meant to be exposed as a normal app endpoint, such as `/docs`.
+- Use absolute path imports starting from `src/` folder. [^1] — `"../../../some.ts"` is hard to read. 📝
+- [Use `type` instead of `interface` where possible.](#interface-is-not-interface-but-interface) 📝
+- [Use `satisfies` instead of `as` for type assertions where possible.](#anyone-dislikes-any-as-much-as-anyone) 📝
+- [Write JSDoc comments for all exported functions and classes!](#write-essay-for-code) 📝
+- [Use named types instead of inline types on destructured parameters.](#brain-can-stackoverflow) 📝
+- Use Hono method chaining for route definitions so route typing stays useful in tests. 📝
+- Do not chain routes only when the route is not meant to be exposed as a normal app endpoint, such as `/docs`. 📝
+
+> ✅ = usually enforced by linter
+>
+> 📝 = project guideline / code review preference
 
 ## Detail
 

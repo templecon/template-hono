@@ -20,7 +20,6 @@ But doesn't support:
 - Every plugin.
 - Some HTML-superset code, which oxlint only checks in the `<script>` block.
 - A few typescript-eslint rules.
-- Clean rule presets like `somePlugin.configs.recommended`.
 
 #### Instructions
 

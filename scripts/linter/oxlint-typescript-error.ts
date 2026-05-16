@@ -103,6 +103,7 @@ export default defineConfig({
         "require-yield": "error",
         "use-isnan": "error",
         "valid-typeof": "error",
+        "typescript/no-deprecated": "error",
     },
     categories: {},
 });

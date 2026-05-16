@@ -9,7 +9,7 @@ Tests should follow general TypeScript guidelines. Tests should cover:
 - Unexpected states
 - TypeScript's type check, via Vitest's type assertion features. See [more](https://vitest.dev/guide/testing-types) and [more](https://github.com/mmkal/expect-type)
 
-## 1. Unit Tests (Node.js)
+## Unit Tests
 
 Use these for pure TypeScript utility files. These tests run in Node.js for maximum speed.
 
@@ -39,16 +39,16 @@ describe("User List", () => {
 });
 ```
 
-## 2. Cloudflare Workers-Specific Tests
+## Cloudflare Workers-Specific Tests
 
-> [!WARNING]
-> This is only available if...
+> [!NOTE]
+> Use this style when you need Cloudflare runtime features such as Workers KV, Durable Objects, R2, or other platform-specific bindings.
 >
-> - `wrangler.jsonc` or `wrangler.toml` is existing
-> - and `@cloudflare/vitest-pool-workers` dependency is installed.
-> - There's additional integration, such as Workers KV, Durable Objects, or R2,
-> - and gonna test those features.
->   Otherwise, use Unit Tests or Hono's built-in testing utilities.
+> - `wrangler.jsonc` or `wrangler.toml` exists
+> - `@cloudflare/vitest-pool-workers` is installed
+> - the test depends on Cloudflare runtime behavior
+>
+> Otherwise, prefer Unit Tests or Hono's built-in testing utilities.
 
 ## Documentation
 

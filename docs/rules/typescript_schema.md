@@ -9,7 +9,10 @@ Use this when defining runtime validation schemas and the TypeScript types deriv
 - Use `z.input<typeof Schema>` for incoming data and `z.output<typeof Schema>` for validated/normalized data.
 - Prefer defaults on the schema instead of repeating fallback values in handlers.
 
-## JSDoc on Schemas
+## JSDoc on Internal Schemas
+
+> [!NOTE]
+> For internal schemas, prefer property JSDoc. If a schema is part of an external API, keep `.meta()` or other explicit API docs alongside it.
 
 Do not use `.describe()` or `.meta()` as the primary place for schema documentation. Those annotations are not as visible in IDEs as property JSDoc, so the docs become easier to miss during implementation.
 
