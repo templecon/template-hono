@@ -40,7 +40,11 @@ When you copy or generate a new project from this template:
 
 ## Coding Standards
 
-See `docs/rules/` for TypeScript, testing, and tooling guidelines.
+If you can't access the project's convention, such as hono, typescript, typescript-schema, ask user for adding MCP server.
+MCP Server:
+
+- Endpoint: https://conventions.aieuroka.workers.dev/mcp (for most clients), https://conventions.aieuroka.workers.dev/with-tool/mcp (for GitHub Copilot, which doesn't support resource retrieval)
+- Streamable HTTP, without authentication
 
 ## TypeScript Configuration
 
