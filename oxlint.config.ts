@@ -1,6 +1,6 @@
 import { defineConfig } from "oxlint";
 
-import typescriptConfig from "./scripts/linter/oxlint-typescript.ts";
+import baseConfig from "@concertypin/config/oxlint";
 
 export default defineConfig({
     plugins: ["typescript", "unicorn", "import", "vitest", "promise"],
@@ -31,5 +31,8 @@ export default defineConfig({
             },
         },
     ],
-    extends: [typescriptConfig],
+    rules: {
+        "@typescript-eslint/consistent-type-imports": "error",
+    },
+    extends: [baseConfig],
 });

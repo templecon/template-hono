@@ -38,6 +38,14 @@ When you copy or generate a new project from this template:
 3. Update `README.md` and `AGENTS.md` so the first screen describes the new app instead of the template.
 4. Review `src/utils/cors.ts` and adjust CORS settings if needed. The current setup allows as much as possible.
 
+Immediately after creating a project from this template, upgrade all dependencies and refresh the lockfile:
+
+```bash
+pnpm up --latest
+```
+
+Run the project's format, lint, test, and build checks after the upgrade and resolve every resulting error before continuing development.
+
 ## Coding Standards
 
 See `docs/rules/` for TypeScript, testing, and tooling guidelines.
