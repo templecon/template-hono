@@ -14,10 +14,10 @@ const localBranch = currentBranch.startsWith("local/")
 
 if (localBranch) {
     const devBranch = `dev/${localBranch.slice("local/".length)}`;
-    console.error(`Refusing to push ${localBranch}.`);
-    console.error("Branches under local/* are for local work only, not for pushing.");
-    console.error(`Rename it to ${devBranch} before pushing:`);
-    console.error(`  git branch -m ${devBranch}`);
-    console.error(`  git push -u origin ${devBranch}`);
+    process.stderr.write(`${`Refusing to push ${localBranch}.`}\n`);
+    process.stderr.write(`${"Branches under local/* are for local work only, not for pushing."}\n`);
+    process.stderr.write(`${`Rename it to ${devBranch} before pushing:`}\n`);
+    process.stderr.write(`${`  git branch -m ${devBranch}`}\n`);
+    process.stderr.write(`${`  git push -u origin ${devBranch}`}\n`);
     process.exit(1);
 }
