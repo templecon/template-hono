@@ -33,7 +33,7 @@
         "deploy": "pnpm run build && wrangler deploy"
     },
     "engines": {
-        "node": ">=22.13.0"
+        "node": ">=24"
     },
     "dependencies": {
         "@hono/standard-validator": "^0.2.2",
