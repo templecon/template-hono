@@ -1,5 +1,5 @@
 //@ts-check
 export default {
     "pre-commit": "pnpm run check",
-    "pre-push": "node check-branch-name.mjs",
+    "pre-push": "node --experimental-strip-types check-branch-name.ts",
 };
