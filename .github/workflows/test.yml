@@ -21,36 +21,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-        with:
-          run_install: false
-      - name: Install node
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-
-      - name: Ready for cache
-        id: ready-cache
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-
-      - name: Get cache(Leader)
-        # Only leader can save cache, avoiding locking problem from race conditions
-        if: ${{matrix.shardIndex == 1}}
-        uses: actions/cache@v5
-        with:
-          path: ${{ steps.ready-cache.outputs.STORE_PATH }}
-          key: pnpm-deps-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Get cache(Follower)
-        # Only restore cache for followers
-        if: ${{matrix.shardIndex != 1}}
-        uses: actions/cache/restore@v5
-        with:
-          key: pnpm-deps-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-deps-cache-
-          path: ${{ steps.ready-cache.outputs.STORE_PATH }}
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -79,8 +55,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup pnpm Environment
-        uses: concertypin/action/pnpm-install@master
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
 
       - name: Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
