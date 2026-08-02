@@ -23,14 +23,6 @@ export default defineConfig({
         "**/.git/**",
         "**/.wrangler/**",
     ],
-    overrides: [
-        {
-            files: ["**/*.d.ts"],
-            rules: {
-                "no-unused-vars": "off",
-            },
-        },
-    ],
     rules: {
         "@typescript-eslint/consistent-type-imports": "error",
     },
