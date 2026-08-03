@@ -28,7 +28,7 @@
         "lint:check": "pnpm run lint:oxlint",
         "lint:oxlint": "oxlint -c oxlint.config.ts . --type-aware --type-check --report-unused-disable-directives-severity=error",
         "postinstall": "pnpm run cf-typegen && simple-git-hooks",
-        "check": "pnpm run format:check && pnpm run lint:check && pnpm run test",
+        "check": "pnpm run format && pnpm run lint && pnpm run test",
         "test": "vitest run",
         "deploy": "pnpm run build && wrangler deploy"
     },
