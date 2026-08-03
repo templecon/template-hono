@@ -1,6 +1,12 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
+type PushedRef = {
+    localRef: string;
+    localOid: string;
+    remoteRef: string;
+};
+
 const currentBranch: string = execFileSync(
     "git",
     ["branch", "--show-current"],
@@ -8,15 +14,32 @@ const currentBranch: string = execFileSync(
         encoding: "utf8",
     }
 ).trim();
-const pushedRefs: string[] = readFileSync(0, "utf8")
+const pushedRefs: PushedRef[] = readFileSync(0, "utf8")
     .split(/\r?\n/)
-    .map((line) => line.trim().split(/\s+/)[0])
+    .map((line) => line.trim().split(/\s+/))
     .filter(
-        (ref): ref is string => ref?.startsWith("refs/heads/local/") === true
-    );
+        (parts): parts is [string, string, string, string, ...string[]] =>
+            parts.length >= 4
+    )
+    .map(([localRef, localOid, remoteRef]) => ({
+        localRef,
+        localOid,
+        remoteRef,
+    }));
+const rejected: PushedRef | undefined = pushedRefs.find(
+    (ref) =>
+        ref.localRef.startsWith("refs/heads/local/") ||
+        (ref.remoteRef.startsWith("refs/heads/local/") &&
+            /^0+$/.test(ref.localOid) === false)
+);
+const rejectedRefName: string | undefined = rejected
+    ? rejected.localRef.startsWith("refs/heads/local/")
+        ? rejected.localRef
+        : rejected.remoteRef
+    : undefined;
 const localBranch: string | undefined = currentBranch.startsWith("local/")
     ? currentBranch
-    : pushedRefs[0]?.replace("refs/heads/", "");
+    : rejectedRefName?.replace("refs/heads/", "");
 
 if (localBranch) {
     const devBranch = `dev/${localBranch.slice("local/".length)}`;
