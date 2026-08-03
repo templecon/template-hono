@@ -6,6 +6,23 @@ A small Hono + Cloudflare Workers template for building APIs with Zod validation
 
 Node.js 26 or higher is required. The templates run TypeScript configuration and hooks directly with Node's built-in type stripping.
 
+Install pnpm (v10.17.1, matching the `packageManager` field) globally; Node 25+ no longer bundles Corepack, so use npm or the standalone installer:
+
+```sh
+npm install -g pnpm@10.17.1
+```
+
+Or with the standalone installer:
+
+```sh
+# macOS / Linux
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+# Windows (PowerShell)
+iwr https://get.pnpm.io/install.ps1 -useb | iex
+```
+
+pnpm reads the `packageManager` field and switches to the pinned version when available; run `pnpm install` in this directory to set up dependencies.
+
 ## What You Get
 
 - [Hono](https://hono.dev/) web framework
@@ -23,14 +40,14 @@ After copying this template into a new project:
 2. Review `wrangler.jsonc` and set the Worker name and bindings for the new app.
 3. Rename the app-specific intro in `README.md`.
 4. Check `AGENTS.md` for the local workflow notes before editing.
-5. Run `pnpm install`, `pnpm cf-typegen`, `pnpm lint`, and `pnpm test`.
+5. Run `pnpm install`, `pnpm cf-typegen`, `pnpm lint:check`, and `pnpm test`.
 
 ## Development
 
 ```sh
 pnpm install
 pnpm dev
-pnpm lint
+pnpm lint:check
 pnpm test
 pnpm build
 ```

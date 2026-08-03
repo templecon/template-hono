@@ -1,4 +1,3 @@
-import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 type PushedRef = {
@@ -7,13 +6,6 @@ type PushedRef = {
     remoteRef: string;
 };
 
-const currentBranch: string = execFileSync(
-    "git",
-    ["branch", "--show-current"],
-    {
-        encoding: "utf8",
-    }
-).trim();
 const pushedRefs: PushedRef[] = readFileSync(0, "utf8")
     .split(/\r?\n/)
     .map((line) => line.trim().split(/\s+/))
@@ -37,9 +29,10 @@ const rejectedRefName: string | undefined = rejected
         ? rejected.localRef
         : rejected.remoteRef
     : undefined;
-const localBranch: string | undefined = currentBranch.startsWith("local/")
-    ? currentBranch
-    : rejectedRefName?.replace("refs/heads/", "");
+const localBranch: string | undefined = rejectedRefName?.replace(
+    "refs/heads/",
+    ""
+);
 
 if (localBranch) {
     const devBranch = `dev/${localBranch.slice("local/".length)}`;
