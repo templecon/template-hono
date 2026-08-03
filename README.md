@@ -2,6 +2,10 @@
 
 A small Hono + Cloudflare Workers template for building APIs with Zod validation, OpenAPI docs, and Vitest.
 
+## Requirements
+
+Node.js 26 or higher is required. The templates run TypeScript configuration and hooks directly with Node's built-in type stripping.
+
 ## What You Get
 
 - [Hono](https://hono.dev/) web framework
@@ -37,4 +41,4 @@ The generated docs are available at `/docs`.
 
 ## License
 
-Apache-2.0, see [LICENSE](./LICENSE) for details.
+MIT, see [LICENSE](./LICENSE) for details.
