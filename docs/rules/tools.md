@@ -24,13 +24,13 @@ But doesn't support:
 
 #### Instructions
 
-The config lives in `oxlint.config.ts`.
+The config lives in `oxlint.config.ts` and extends the shared `@concertypin/config/oxlint` preset.
 
 When using new plugins, try oxlint's plugin compatibility docs first.
 
 - Make a config in the `scripts/linter/` directory for the plugin.
 - Write the rules you want to use in that config.
-- Extend `scripts/linter/oxlint-typescript.ts` with the config you made.
+- Extend the root `oxlint.config.ts` with the config you made to keep local overrides in one chain.
 
 If the plugin needs JS plugin support, add it in `oxlint.config.ts` with `jsPlugins` instead of bringing ESLint back.
 
