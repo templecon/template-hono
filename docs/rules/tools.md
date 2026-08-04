@@ -36,4 +36,4 @@ If the plugin needs JS plugin support, add it in `oxlint.config.ts` with `jsPlug
 
 ## Formatter Configuration
 
-This project uses Prettier for formatting.
+This project uses Oxfmt for formatting.

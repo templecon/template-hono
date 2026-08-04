@@ -1,14 +1,14 @@
 {
     "[javascript][typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.defaultFormatter": "oxc.oxc-vscode",
         "editor.tabSize": 4
     },
     "[github-actions-workflow][yaml]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.defaultFormatter": "oxc.oxc-vscode",
         "editor.tabSize": 2
     },
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "[json][jsonc]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
     },
     "js/ts.preferences.preferTypeOnlyAutoImports": true,
     "files.eol": "\n",
