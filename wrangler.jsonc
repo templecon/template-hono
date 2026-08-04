@@ -6,11 +6,6 @@
     "main": "./src/index.ts",
     "send_metrics": false,
     "observability": {
-        "enabled": true,
-    },
-    "env": {
-        "prod": {
-            "name": "",
-        },
-    },
+        "enabled": true
+    }
 }

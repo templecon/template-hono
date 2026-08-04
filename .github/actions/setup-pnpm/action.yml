@@ -1,0 +1,14 @@
+name: Set up pnpm and Node.js
+description: Install pnpm via pnpm/action-setup and set up Node.js from package.json with pnpm caching.
+
+runs:
+  using: composite
+  steps:
+    - name: Set up pnpm
+      uses: pnpm/action-setup@v6
+
+    - name: Set up Node.js with pnpm cache
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: package.json
+        cache: pnpm

@@ -12,8 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup pnpm Environment
-        uses: concertypin/action/pnpm-install@master
+      - name: Set up pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Buildable test
         run: pnpm build
