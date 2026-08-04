@@ -29,27 +29,21 @@ describe("route.ts - POST / endpoint", () => {
         expect(data.hello).toBe("Hello, 日本語!");
     });
 
-    it.concurrent(
-        "should return greeting with accented characters",
-        async () => {
-            const resp = await client.index.$post({
-                json: { name: "José" },
-            });
-            const data = await resp.json();
-            expect(data.hello).toBe("Hello, José!");
-        }
-    );
+    it.concurrent("should return greeting with accented characters", async () => {
+        const resp = await client.index.$post({
+            json: { name: "José" },
+        });
+        const data = await resp.json();
+        expect(data.hello).toBe("Hello, José!");
+    });
 
-    it.concurrent(
-        "should return greeting with special characters",
-        async () => {
-            const resp = await client.index.$post({
-                json: { name: "<test>" },
-            });
-            const data = await resp.json();
-            expect(data.hello).toBe("Hello, <test>!");
-        }
-    );
+    it.concurrent("should return greeting with special characters", async () => {
+        const resp = await client.index.$post({
+            json: { name: "<test>" },
+        });
+        const data = await resp.json();
+        expect(data.hello).toBe("Hello, <test>!");
+    });
 
     it.concurrent("should return greeting with apostrophe", async () => {
         const resp = await client.index.$post({
@@ -68,17 +62,14 @@ describe("route.ts - POST / endpoint", () => {
         expect(data.hello).toBe(`Hello, ${longName}!`);
     });
 
-    it.concurrent(
-        "should return 400 for invalid type (number instead of string)",
-        async () => {
-            const resp = await client.index.$post({
-                // @ts-expect-error Testing invalid type
-                json: { name: 123 },
-            });
-            // Zod validation should reject number
-            expect(resp.status).toBe(400);
-        }
-    );
+    it.concurrent("should return 400 for invalid type (number instead of string)", async () => {
+        const resp = await client.index.$post({
+            // @ts-expect-error Testing invalid type
+            json: { name: 123 },
+        });
+        // Zod validation should reject number
+        expect(resp.status).toBe(400);
+    });
 
     it.concurrent("should return 400 for missing name field", async () => {
         const resp = await client.index.$post({
