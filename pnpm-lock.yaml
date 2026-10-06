@@ -197,7 +197,7 @@ packages:
     os: [win32]
 
   '@concertypin/config@0.4.0':
-    resolution: {integrity: sha512-h0qodUpwndMzxJ2gD2AUx6m9CF0qqIfJoT0XGJ4S5F/xvEdZ6FP9Prx+0MwOfJTl5ismRIt+8q8Jr6joLFofEQ==}
+    resolution: {integrity: sha512-BlRhQv1qRHIxF0uYkT+8IMP/DlO2HiuVpEeXRdm1ADUSfVA502vbzzWUt+I91/LyB0fGHMf8xlCe8RrPWlbj2w==}
     engines: {node: '>=24.11.0'}
     peerDependencies:
       oxfmt: '>=0.62.0 <1'
