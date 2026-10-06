@@ -1,9 +1,10 @@
-import { router } from "@/route";
 import { Scalar } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { openAPIRouteHandler } from "hono-openapi";
-import { cors } from "@/utils/cors";
+
+import { router } from "@/route";
 import type { HonoEnv } from "@/types";
+import { cors } from "@/utils/cors";
 /**
  * @fileoverview
  * This is the main entry point of the Hono application. It sets up the routing and middleware for the application.

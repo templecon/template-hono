@@ -1,7 +1,8 @@
-import type { HonoEnv } from "@/types";
 import { Hono } from "hono";
 import { describeRoute, resolver, validator } from "hono-openapi";
 import * as z from "zod";
+
+import type { HonoEnv } from "@/types";
 
 const inputSchema = z.object({
     name: z.string(),

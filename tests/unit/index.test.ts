@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest";
 import { testClient } from "hono/testing";
+import { describe, expect, it } from "vitest";
+
 import app from "@/index";
 
 describe("index.ts - app configuration", () => {
