@@ -1,1 +1,6 @@
+# Keep text files as LF across platforms.
+* text=auto eol=lf
+
+# Lockfiles still deserve security review, but their large diffs can stall IDE diff viewers.
+# Keep the lockfile tracked; force a text diff when inspecting its contents.
 pnpm-lock.yaml -diff
