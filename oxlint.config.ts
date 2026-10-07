@@ -1,4 +1,4 @@
-import baseConfig from "@concertypin/config/oxlint";
+import createOxlintConfig from "@concertypin/config/oxlint";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
@@ -25,5 +25,5 @@ export default defineConfig({
     rules: {
         "@typescript-eslint/consistent-type-imports": "error",
     },
-    extends: [baseConfig()],
+    extends: [createOxlintConfig()],
 });
