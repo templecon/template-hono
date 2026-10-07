@@ -28,6 +28,7 @@ export async function fetchUserList(): Promise<User[]> {
 
 // utils.test.ts (The Test)
 import { describe, it, expect, expectTypeOf } from "vitest";
+
 import { fetchUserList } from "./utils";
 
 describe("User List", () => {
@@ -45,10 +46,14 @@ describe("User List", () => {
 > This is only available if...
 >
 > - `wrangler.jsonc` or `wrangler.toml` is existing
-> - and `@cloudflare/vitest-pool-workers` dependency is installed.
+> - and `@cloudflare/vitest-plugin` dependency is installed.
 > - There's additional integration, such as Workers KV, Durable Objects, or R2,
 > - and gonna test those features.
 >   Otherwise, use Unit Tests or Hono's built-in testing utilities.
+>
+> Keep `vitest` within the peer dependency range declared by
+> `@cloudflare/vitest-plugin`. The plugin depends on internal Vitest APIs,
+> so an out-of-range version may fail before test files start.
 
 ## Documentation
 

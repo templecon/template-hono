@@ -1,5 +1,6 @@
-import type { HonoEnv } from "@/types";
 import type { Context as RawContext, Next } from "hono";
+
+import type { HonoEnv } from "@/types";
 type Context = RawContext<HonoEnv, string>;
 
 function applyCorsHeaders(c: Context) {

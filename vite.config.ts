@@ -1,8 +1,10 @@
 /// <reference types="vitest/config" />
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
-import { cloudflare } from "@cloudflare/vite-plugin";
-import { type UserConfig, defineConfig } from "vite";
+
 import { fileURLToPath } from "node:url";
+
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
+import { type UserConfig, defineConfig } from "vite";
 
 type Config = Required<UserConfig>;
 
@@ -62,7 +64,6 @@ const buildConfig: Config["build"] = {
     rolldownOptions: {
         // Disable code splitting
         output: {
-            inlineDynamicImports: true,
             codeSplitting: false,
         },
     },
