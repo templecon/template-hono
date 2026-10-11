@@ -2,15 +2,8 @@ import baseConfig from "@concertypin/config/oxlint";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-    plugins: ["typescript", "unicorn", "import", "vitest", "promise"],
     env: {
         builtin: true,
-    },
-    options: {
-        denyWarnings: true,
-        typeAware: true,
-        typeCheck: true,
-        reportUnusedDisableDirectives: "error",
     },
     ignorePatterns: [
         "**/node_modules/**",
