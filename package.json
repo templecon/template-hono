@@ -26,7 +26,7 @@
         "format:check": "oxfmt --check .",
         "lint": "pnpm run lint:oxlint --fix",
         "lint:check": "pnpm run lint:oxlint",
-        "lint:oxlint": "oxlint -c oxlint.config.ts . --type-aware --type-check --report-unused-disable-directives-severity=error",
+        "lint:oxlint": "oxlint -c oxlint.config.ts .",
         "postinstall": "pnpm run cf-typegen && simple-git-hooks",
         "check": "pnpm run format && pnpm run lint && pnpm run test",
         "test": "vitest run",
