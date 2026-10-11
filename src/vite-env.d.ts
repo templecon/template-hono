@@ -7,7 +7,6 @@ interface ImportMetaEnv extends Readonly<{
      * It can be used to inline test code.
      */
     VITEST: "true" | undefined;
-    // oxlint-disable-next-line typescript/no-empty-object-type
 }> {}
 
 interface ImportMeta {

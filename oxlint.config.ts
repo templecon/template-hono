@@ -2,7 +2,6 @@ import baseConfig from "@concertypin/config/oxlint";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
-    plugins: ["typescript", "unicorn", "import", "vitest", "promise"],
     env: {
         builtin: true,
     },
