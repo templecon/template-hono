@@ -6,22 +6,11 @@ A small Hono + Cloudflare Workers template for building APIs with Zod validation
 
 Node.js 26 or higher is required. The templates run TypeScript configuration and hooks directly with Node's built-in type stripping.
 
-Install pnpm (v10.17.1, matching the `packageManager` field) globally; Node 25+ no longer bundles Corepack, so use npm or the standalone installer:
+This project uses pnpm. Install dependencies:
 
 ```sh
-npm install -g pnpm@10.17.1
+pnpm install
 ```
-
-Or with the standalone installer:
-
-```sh
-# macOS / Linux
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-# Windows (PowerShell)
-iwr https://get.pnpm.io/install.ps1 -useb | iex
-```
-
-pnpm reads the `packageManager` field and switches to the pinned version when available; run `pnpm install` in this directory to set up dependencies.
 
 ## What You Get
 
